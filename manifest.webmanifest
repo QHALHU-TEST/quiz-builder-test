@@ -1,0 +1,30 @@
+{
+  "name": "Quiz Builder — (MADE BY ALI HUSSAIN ALQAHTANI)",
+  "short_name": "Quiz Builder",
+  "description": "Build quizzes from pasted text or files, practice, flashcards, and summaries — offline-capable.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071b2b",
+  "theme_color": "#0a2b47",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
