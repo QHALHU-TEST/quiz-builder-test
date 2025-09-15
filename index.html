@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Quiz Builder OCR + AI</title>
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0a2b47">
+
+<!-- External libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+
+<style>
+  body{margin:0;font:16px/1.5 system-ui;background:#071b2b;color:#e9f4ff}
+  .banner{padding:10px;background:#06314d;color:#ccecff}
+  .mheader{display:flex;gap:10px;padding:10px;background:#08253f}
+  .hamburger{padding:6px 12px;border:1px solid #13476f;background:#0a2239;color:#fff;cursor:pointer}
+  .app{display:grid;grid-template-columns:1fr;min-height:80vh}
+  .sidebar{position:fixed;top:88px;left:0;width:280px;background:#0d2f4f;transform:translateX(-100%);transition:.25s;z-index:1200;padding:14px}
+  body.drawer-open .sidebar{transform:translateX(0)}
+  .backdrop{position:fixed;inset:88px 0 0 0;background:rgba(0,0,0,.35);display:none;z-index:1100}
+  body.drawer-open .backdrop{display:block}
+  @media(min-width:1024px){.sidebar{position:relative;transform:none;width:300px}.backdrop{display:none!important}.mheader{display:none}}
+  .main{padding:16px}
+  .btn{padding:10px 14px;border-radius:8px;background:#11385b;color:#fff;cursor:pointer;border:1px solid #13476f;margin:4px 0;display:inline-block}
+  .btn.primary{background:linear-gradient(180deg,#5cc8ff,#7aa8ff);color:#06223a;border:none}
+  .btn.danger{background:#5a1c1c;color:#fff}
+  .opt{display:flex;align-items:flex-start;gap:10px;margin:8px 0;padding:10px;border:1px solid #13476f;border-radius:8px;background:#0a2239}
+  .opt.correct{border-color:#1ea96b;background:#0b2419}
+  .opt.wrong{border-color:#d54b4b;background:#241013}
+  .drop-wrap{border:2px dashed #13476f;padding:40px;text-align:center;margin:20px 0}
+  .review{margin-top:20px;padding:10px;border:1px solid #13476f;background:#0a2239;border-radius:8px}
+  .watermark-bottom{position:fixed;bottom:6px;left:50%;transform:translateX(-50%);font-size:12px;color:#9fc9ef;opacity:.7;pointer-events:none;z-index:2000;text-align:center}
+  .watermark-top{font-size:10px;color:#b7d9f7;opacity:.8;margin-left:6px;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="banner" id="jsBanner">Ready <span class="watermark-top">(MADE BY ALI HUSSAIN ALQAHTANI)</span></div>
+<div class="mheader">
+  <button class="hamburger" id="openDrawerBtn">☰ Menu</button>
+</div>
+<div class="backdrop" id="drawerBackdrop"></div>
+
+<div class="app">
+  <aside class="sidebar">
+    <h3>AI Settings</h3>
+    <input id="apiKeyInput" type="password" placeholder="Enter OpenAI API Key"/>
+    <button class="btn" id="saveKeyBtn">Save Key</button>
+    <br><br>
+    <label>Model:
+      <select id="modelSelect">
+        <option value="gpt-4o-mini">GPT-4o-mini (cheap/fast)</option>
+        <option value="gpt-4.1">GPT-4.1 (high quality)</option>
+      </select>
+    </label>
+    <br><br>
+    <h3>Saved Quizzes</h3>
+    <div id="savedList"></div>
+    <button class="btn" onclick="exportQuizzes()">Export</button>
+    <input type="file" id="importInput" accept=".json" hidden>
+    <button class="btn" onclick="document.getElementById('importInput').click()">Import</button>
+    <br><br>
+    <button class="btn" id="closeDrawerBtn">Close</button>
+  </aside>
+
+  <main class="main">
+    <h2>Drop in a chapter file</h2>
+    <div class="drop-wrap" id="dropWrap">
+      <p>Drop a .txt / .docx / .pdf / image here<br>or <input type="file" id="fileInput" multiple/></p>
+    </div>
+    <div id="output"></div>
+  </main>
+</div>
+
+<div class="watermark-bottom">(MADE BY ALI HUSSAIN ALQAHTANI)</div>
+<script src="app.js"></script>
+</body>
+</html>
